@@ -158,7 +158,7 @@ def main():
 
     if arguments.use_prebuilt_tensorflow:
         print("Using existing TensorFlow")
-        command_executor(["pip", "install", "-U", "--no-cache-dir", tensorflow==" + tf_version])
+        command_executor(["pip", "install", "-U", "--no-cache-dir", "tensorflow==" + tf_version])
 
         import tensorflow as tf
         print('Version information:')
