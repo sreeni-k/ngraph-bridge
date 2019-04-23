@@ -2,7 +2,7 @@
       rm -rf /localdisk/buildkite/artifacts/$BUILDKITE_BUILD_ID/$BUILDKITE_BUILD_ID
       virtualenv -p /usr/bin/python3 /localdisk/buildkite/artifacts/$BUILDKITE_BUILD_ID/venv 
       source /localdisk/buildkite/artifacts/$BUILDKITE_BUILD_ID/venv/bin/activate 
-      pip install -U yapf==0.26.0
+      pip install -U --no-cache-dir yapf==0.26.0
       
     label: ":gear: Setup"
     timeout_in_minutes: 30
@@ -39,7 +39,7 @@
   
   - command: |
       source /localdisk/buildkite/artifacts/$BUILDKITE_BUILD_ID/venv/bin/activate 
-      pip install -U \
+      pip install -U --no-cache-dir \
         /localdisk/buildkite/artifacts/$BUILDKITE_BUILD_ID/tensorflow/tensorflow-1.13.1-cp36-cp36m-linux_x86_64.whl
       PYTHONPATH=`pwd` python3 test/ci/buildkite/test_runner.py \
         --artifacts /localdisk/buildkite/artifacts/$BUILDKITE_BUILD_ID --test_bazel
@@ -64,7 +64,7 @@
 
   - command: |
       source /localdisk/buildkite/artifacts/$BUILDKITE_BUILD_ID/venv/bin/activate 
-      pip install psutil && pip install -U \
+      pip install --no-cache-dir psutil && pip install -U --no-cache-dir \
         /localdisk/buildkite/artifacts/$BUILDKITE_BUILD_ID/tensorflow/tensorflow-1.13.1-cp36-cp36m-linux_x86_64.whl
       
     label: ":gear: Install"
@@ -76,7 +76,7 @@
 
   - command: |
       source /localdisk/buildkite/artifacts/$BUILDKITE_BUILD_ID/venv/bin/activate 
-      pip install pytest
+      pip install --no-cache-dir pytest
       PYTHONPATH=`pwd` python3 test/ci/buildkite/test_runner.py \
         --artifacts /localdisk/buildkite/artifacts/$BUILDKITE_BUILD_ID --test_python
     
@@ -87,7 +87,7 @@
 
   - command: |
       source /localdisk/buildkite/artifacts/$BUILDKITE_BUILD_ID/venv/bin/activate 
-      pip install pytest
+      pip install --no-cache-dir pytest
       PYTHONPATH=`pwd` python3 test/ci/buildkite/test_runner.py \
         --artifacts /localdisk/buildkite/artifacts/$BUILDKITE_BUILD_ID --test_tf_python
     

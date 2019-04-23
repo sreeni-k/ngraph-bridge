@@ -21,7 +21,14 @@ import random
 import tensorflow as tf
 from tensorflow.core.protobuf import rewriter_config_pb2
 
+print("Already loaded ngraph_bridge?: " + str('ngraph_bridge' in sys.modules))
 import ngraph_bridge
+assert ('ngraph_bridge' in sys.modules)
+print(ngraph_bridge.__version__)
+print(ngraph_bridge.__file__)
+print(ngraph_bridge.__path__)
+print(ngraph_bridge.__cached__)
+
 
 __all__ = ['LIBNGRAPH_BRIDGE', 'NgraphTest']
 

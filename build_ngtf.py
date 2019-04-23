@@ -158,7 +158,7 @@ def main():
 
     if arguments.use_prebuilt_tensorflow:
         print("Using existing TensorFlow")
-        command_executor(["pip", "install", "-U", "tensorflow==" + tf_version])
+        command_executor(["pip", "install", "-U", "--no-cache-dir", tensorflow==" + tf_version])
 
         import tensorflow as tf
         print('Version information:')
@@ -228,7 +228,7 @@ def main():
         ngraph_cmake_flags.extend(["-DNGRAPH_GPU_ENABLE=NO"])
 
     if arguments.build_plaidml_backend:
-        command_executor(["pip", "install", "-U", "plaidML"])
+        command_executor(["pip", "install", "-U", "--no-cache-dir", "plaidML"])
         ngraph_cmake_flags.extend(["-DNGRAPH_PLAIDML_ENABLE=YES"])
     else:
         ngraph_cmake_flags.extend(["-DNGRAPH_PLAIDML_ENABLE=NO"])
