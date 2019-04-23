@@ -29,7 +29,6 @@ print(ngraph_bridge.__file__)
 print(ngraph_bridge.__path__)
 print(ngraph_bridge.__cached__)
 
-
 __all__ = ['LIBNGRAPH_BRIDGE', 'NgraphTest']
 
 _ext = 'dylib' if platform.system() == 'Darwin' else 'so'

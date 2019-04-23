@@ -263,7 +263,8 @@ def install_tensorflow(venv_dir, artifacts_dir):
             "artifacts directory contains more than 1 version of tensorflow wheel"
         )
 
-    command_executor(["pip", "install", "-U", "--no-cache-dir", tf_wheel_files[0]])
+    command_executor(
+        ["pip", "install", "-U", "--no-cache-dir", tf_wheel_files[0]])
 
     cxx_abi = "0"
     if (platform.system() == 'Linux'):
