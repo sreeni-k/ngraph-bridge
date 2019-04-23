@@ -20,6 +20,7 @@ import random
 
 import tensorflow as tf
 from tensorflow.core.protobuf import rewriter_config_pb2
+import sys
 
 print("Already loaded ngraph_bridge?: " + str('ngraph_bridge' in sys.modules))
 import ngraph_bridge
