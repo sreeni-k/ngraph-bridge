@@ -20,6 +20,7 @@
 #include "ngraph_api.h"
 #include "ngraph_assign_clusters.h"
 #include "ngraph_capture_variables.h"
+#include "ngraph_cluster_manager.h"
 #include "ngraph_deassign_clusters.h"
 #include "ngraph_encapsulate_clusters.h"
 #include "ngraph_log.h"
@@ -123,7 +124,19 @@ class NGraphVariableCapturePass : public NGraphRewritePass {
     // we will not do anything; all subsequent
     // passes become a no-op.
     if (config::IsEnabled() == false ||
-        std::getenv("NGRAPH_TF_DISABLE") != nullptr) {
+        std::getenv("NGRAPH_TF_DISABLE") != nullptr ||
+        IsProcessedByNgraphPass(options.graph->get())) {
+      // In the case that we run a network with ngraph, cluster manager gets
+      // populated. Then we run a new network, it repopulates the cluster
+      // manager. This works under the assumption that whenever
+      // NGraphEncapsulate's Compute is run the rewrite passes (grappler or
+      // optimization passes) have also run (compute --> rewrite). Now that
+      // assumption is broken because now we support NGraphEncapsulate enabled
+      // graphs. Such graphs will not run the first rewrite pass, hence the
+      // cluster manager is not overwritten. Which would mean that cluster
+      // manager contains stale data from a previous run. Hence evicting cluster
+      // manager when rewrite passes are not run.
+      NGraphClusterManager::EvictAllClusters();
       return Status::OK();
     }
 
@@ -182,7 +195,9 @@ class NGraphEncapsulationPass : public NGraphRewritePass {
     // we will not do anything; all subsequent
     // passes become a no-op.
     if (config::IsEnabled() == false ||
-        std::getenv("NGRAPH_TF_DISABLE") != nullptr) {
+        std::getenv("NGRAPH_TF_DISABLE") != nullptr ||
+        IsProcessedByNgraphPass(options.graph->get())) {
+      NGraphClusterManager::EvictAllClusters();
       return Status::OK();
     }
 
